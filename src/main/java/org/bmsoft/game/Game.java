@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
     private static final long serializedVersionUID = 1L;
@@ -59,7 +60,8 @@ public class Game extends Canvas implements Runnable {
         }
 
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
+        var rnd = new Random();
+        g.setColor(Color.decode(String.valueOf(rnd.nextInt())));
         g.fillRect(0, 0, getWidth(), getHeight());
         g.dispose();
         bs.show();
