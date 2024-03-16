@@ -49,9 +49,32 @@ public class Game extends Canvas implements Runnable {
 
     @Override
     public void run() {
+        long lastTime = System.nanoTime();
+        long timer = System.currentTimeMillis();
+        final double ns = 1000000000.0 / 120.0;
+        double deltaTime = 0.0;
+        double updates = 0.0;
+        double frames = 0.0;
         while (running) {
-            update();
+            long now = System.nanoTime();
+            deltaTime += (now - lastTime) / ns;
+            lastTime = now;
+
+            while (deltaTime >= 1) {
+                update();
+                updates++;
+                deltaTime--;
+            }
+
             render();
+            frames++;
+
+            if((System.currentTimeMillis() - timer) > 1000) {
+                timer += 1000;
+                System.out.println("UPS: " + updates + ", FPS: " + frames);
+                frames = 0;
+                updates = 0;
+            }
         }
     }
 
@@ -64,14 +87,13 @@ public class Game extends Canvas implements Runnable {
             return;
         }
 
+        screen.clear();
         screen.render();
         for(int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.pixels[i];
         }
 
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
         g.dispose();
         bs.show();
