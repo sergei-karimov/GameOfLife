@@ -8,7 +8,7 @@ import java.awt.image.DataBufferInt
 import javax.swing.JFrame
 
 class Game : Canvas(), Runnable {
-    val TITLE = "Game of Life"
+    val title = "Game of Life"
 
     private var thread: Thread? = null
     var frame: JFrame
@@ -50,6 +50,7 @@ class Game : Canvas(), Runnable {
         var deltaTime = 0.0
         var updates = 0.0
         var frames = 0.0
+
         while (running) {
             val now = System.nanoTime()
             deltaTime += (now - lastTime) / ns
@@ -66,20 +67,21 @@ class Game : Canvas(), Runnable {
 
             if ((System.currentTimeMillis() - timer) > 1000) {
                 timer += 1000
-                frame.title = "$TITLE  |  UPS: $updates, FPS: $frames"
+                frame.title = "$title  |  UPS: $updates, FPS: $frames"
                 frames = 0.0
                 updates = 0.0
             }
         }
     }
 
-    fun update() {
-        for (i in pixels.indices) {
-            pixels[i] = screen.pixels.get(i)
-        }
+    private fun update() {
     }
 
-    fun render() {
+    private fun render() {
+        for (i in pixels.indices) {
+            pixels[i] = screen.pixels[i]
+        }
+
         val bs = bufferStrategy
         if (bs == null) {
             createBufferStrategy(3)
@@ -96,8 +98,6 @@ class Game : Canvas(), Runnable {
     }
 
     companion object {
-        private const val serializedVersionUID = 1L
-
         var scale: Int = 3
         var width: Int = 1440 / scale
         var height: Int = width / 16 * 9
