@@ -9,7 +9,7 @@ object Main {
         println("Game started")
         val game = Game()
         game.frame.isResizable = false
-        game.frame.title = "Game of life"
+        game.frame.title = game.TITLE
         game.frame.add(game)
         game.frame.pack()
         game.frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
