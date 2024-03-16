@@ -44,7 +44,7 @@ class Game : Canvas(), Runnable {
     override fun run() {
         var lastTime = System.nanoTime()
         var timer = System.currentTimeMillis()
-        val ns = 1000000000.0 / 120.0
+        val ns = 1000000000.0 / 60.0
         var deltaTime = 0.0
         var updates = 0.0
         var frames = 0.0
@@ -96,7 +96,7 @@ class Game : Canvas(), Runnable {
         private const val serializedVersionUID = 1L
 
         var scale: Int = 3
-        var width: Int = 1440 / scale
+        var width: Int = 300
         var height: Int = width / 16 * 9
     }
 }
